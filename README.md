@@ -51,7 +51,7 @@ resource "azurerm_resource_group" "gg" {
 }
 
 module "setup" {
-  source                        = "github.com/ukho/tfmodule-azure-vnet-with-nsg?ref=0.4.0"
+  source                        = "github.com/ukho/tfmodule-azure-vnet-with-nsg?ref=0.5.1"
   providers = {
     azurerm.src = azurerm.alias
   }
@@ -83,6 +83,8 @@ It is also worth noting, the addition of newbits to the base address should not 
   number = 1
 }]
 ```
+## Example for subnets with delegation
+Deligation is handled manually, there were too many moving parts for this to be handled with a dynamic loop
 
 ## Service Endpoints
 
