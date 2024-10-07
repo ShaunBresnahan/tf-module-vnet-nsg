@@ -6,7 +6,6 @@ resource "azurerm_subnet" "spokesubnet" {
   virtual_network_name = azurerm_virtual_network.spokevnet.name
   address_prefixes     = [cidrsubnet(local.base_cidr_block, var.newbits, var.subnets[count.index].number)]
   service_endpoints    = var.service_endpoints
-  lifecycle { ignore_changes = [enforce_private_link_endpoint_network_policies, delegation] }
 } 
 
 resource "azurerm_subnet_network_security_group_association" "spokesubnetnsg" {
