@@ -20,8 +20,14 @@ variable "dns_servers" {
 }
 
 
-variable "subnets" {    
-  description = "array of subnets"
+variable "subnets" {
+  description = "Array of subnets. Each subnet can optionally have delegation."
+  type = list(object({
+    name               = string
+    number             = number
+    delegation_name    = optional(string)
+    delegation_actions = optional(list(string))
+  }))
 }
 
 variable "newbits" {
