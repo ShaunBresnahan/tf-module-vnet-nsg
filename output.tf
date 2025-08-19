@@ -12,6 +12,5 @@ output "network_security_group_name" {
 
 # New output for route table module
 output "subnet_ids" {
-  description = "Map of subnet IDs keyed by subnet name"
-  value       = { for name, subnet in azurerm_subnet.spokesubnet : name => subnet.id }
+  value = { for name, subnet in azurerm_subnet.spokesubnet : name => subnet.id }
 }
