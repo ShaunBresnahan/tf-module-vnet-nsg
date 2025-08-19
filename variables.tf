@@ -16,9 +16,8 @@ variable "address" {
 
 variable "dns_servers" {
   description = "ips for dns server"
-  default = []
+  default     = []
 }
-
 
 variable "subnets" {
   description = "Array of subnets. Each subnet can optionally have delegation."
@@ -39,6 +38,6 @@ variable "service_endpoints" {
 }
 
 variable "tags" {
-  type = map
+  type    = map(any)
   default = {}
 }
