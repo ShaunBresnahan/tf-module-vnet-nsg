@@ -8,84 +8,63 @@
 ## Usage
 
 ```terraform
-variable "address" {
-  default = "10.0.1.0/24"
+
+variable "subscription_id" {
+  description = "Azure Subscription ID"
+  type        = string
 }
 
-variable "subnets" {
-  default = [
-    {
-      name = "service-subnet"
-      number = 0
-    }
-  ]
+variable "MAIN_LOCATION" {
+  description = "The location for the resource group."
+  type        = string
 }
 
-variable "endpoints" {
-  default = ["Microsoft.Sql", "Microsoft.Storage", "Microsoft.KeyVault"]
+variable "ProjectIdentity" {
+  description = "Project identity prefix"
+  type        = string
 }
 
-variable "tags" {
-  type = map
-  default = {
-    ENVIRONMENT      = "Dev"
-  }
+variable "MAIN_ADDRESS" {
+  description = "Main address space"
+  type        = string
 }
 
-variable "subscriptionId {
-default="12312312312-312-312-3-12"
+variable "NEWBITS" {
+  description = "New bits for subnetting"
+  type        = number
 }
 
-provider "azurerm" {
-  version = "=2.20.0"
-  features {}
-  alias           = "alias"
-  subscription_id = var.SubscriptionId
+variable "MAIN_ENDPOINTS" {
+  description = "Service endpoints to associate with the subnets"
+  type        = list(string)
 }
 
-
-resource "azurerm_resource_group" "gg" {
-  name = "existing-rg"
-  location = "UKSouth"
-  tags = var.tags
+variable "SUBNETS" {
+  description = "List of subnets"
+  type = list(object({
+    name               = string
+    number             = number
+    delegation_name    = optional(string)
+    delegation_actions = optional(list(string))
+  }))
 }
 
-module "setup" {
-  source                        = "github.com/ukho/tfmodule-azure-vnet-with-nsg"
+variable "DNS_SERVERS" {
+  description = "List of DNS servers"
+  type        = list(string)
+}
+
+module "alias" {
+  source     = "./tf-module-vnet-nsg"
   providers = {
-    azurerm.src = azurerm.alias
+    azurerm.src = azurerm.something
   }
-  prefix                        = "Prefix"
-  tags                          = "${var.tags}"
-  resource_group                = azurerm_resource_group.gg
-  address                       = "${var.address}"
-  subnets                       = "${var.subnets}"
-  newbits                       = "4"
-  service_endpoints             = "${var.endpoints}"
-}
+  resource_group    = data.azurerm_resource_group.rg
+  prefix            = var.ProjectIdentity
+  address           = var.MAIN_ADDRESS
+  dns_servers       = var.DNS_SERVERS
+  subnets           = var.SUBNETS
+  newbits           = var.NEWBITS
+  service_endpoints = var.MAIN_ENDPOINTS
+}}
 ```
-
-if you arent woried about the version you use, latest can be retrieved by removing `?ref=x.y.z` from source path
-
-## Example for subnets
-
-subnets are created using an array expecting a `name` and a `number`, number should increment from 0.
-
-It is also worth noting, the addition of newbits to the base address should not exceed /29. Azure has the habit of absorbing 5 ip addresses per subnet. so the smallest you could go it a range of 8 ips (/29). with a newbits of 4, this would imply a minimum base of /25 is needed.
-
-```terraform
-[{
-  name = "subnet1-subnet"
-  number = 0
-},
-{
-  name = "subnet2-subnet"
-  number = 1
-}]
-```
-## Example for subnets with delegation
-Deligation is handled manually, there were too many moving parts for this to be handled with a dynamic loop
-
-## Service Endpoints
-
-An example of `service_endpoints` is ["Microsoft.Sql", "Microsoft.Storage", "Microsoft.KeyVault"]
