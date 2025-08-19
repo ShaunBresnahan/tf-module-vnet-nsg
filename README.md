@@ -65,5 +65,5 @@ module "alias" {
   subnets           = var.SUBNETS
   newbits           = var.NEWBITS
   service_endpoints = var.MAIN_ENDPOINTS
-}}
+}
 ```
