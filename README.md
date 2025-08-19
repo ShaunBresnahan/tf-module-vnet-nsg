@@ -3,7 +3,6 @@
 ## Required Resources
 
 - `Resource Group` exists or is created external to the module.
-- `Provider` must be created external to the module.
 
 ## Usage
 
