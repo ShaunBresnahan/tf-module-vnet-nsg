@@ -26,6 +26,7 @@ variable "subnets" {
     number             = number
     delegation_name    = optional(string)
     delegation_actions = optional(list(string))
+    newbits            = optional(number)
   }))
 }
 
