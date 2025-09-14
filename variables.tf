@@ -42,3 +42,34 @@ variable "tags" {
   type    = map(any)
   default = {}
 }
+
+
+###new
+
+
+variable "ipam_pool_id" {
+  description = "The ID of the IPAM pool to allocate from."
+  type        = string
+}
+
+variable "auto_calculate_ip_count" {
+  description = "If true, number_of_ip_addresses will be calculated from the IPAM pool CIDR."
+  type        = bool
+  default     = true
+}
+
+variable "number_of_ip_addresses" {
+  description = "Manually set number of IP addresses to allocate (ignored if auto_calculate_ip_count = true)."
+  type        = number
+  default     = null
+}
+
+variable "ipam_pool_name" {
+  description = "Name of the IPAM pool to allocate from."
+  type        = string
+}
+
+variable "network_manager_id" {
+  description = "The ID of the Network Manager that owns the IPAM pool."
+  type        = string
+}
