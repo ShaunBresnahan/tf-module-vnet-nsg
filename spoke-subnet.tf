@@ -1,4 +1,3 @@
-# Use the first address space from the VNet as the base
 locals {
   base_cidr_block = data.azurerm_virtual_network.spokevnet.address_space[0]
 }
@@ -10,7 +9,6 @@ resource "azurerm_subnet" "spokesubnet" {
   resource_group_name  = var.resource_group.name
   virtual_network_name = azurerm_virtual_network.spokevnet.name
 
-  # Subnet from the IPAM‑allocated base CIDR
   address_prefixes = [
     cidrsubnet(local.base_cidr_block, coalesce(each.value.newbits, var.newbits), each.value.number)
   ]
@@ -35,6 +33,7 @@ resource "azurerm_subnet_network_security_group_association" "spokesubnetnsg" {
   subnet_id                 = each.value.id
   network_security_group_id = azurerm_network_security_group.nsg.id
 }
+
 
 
 

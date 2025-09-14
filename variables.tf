@@ -1,21 +1,19 @@
 variable "prefix" { 
-  description = "Prefix added to the front of the nsg and vnet" 
+  description = "Prefix added to the front of the NSG and VNet" 
+  type        = string
 }
 
 variable "resource_group" {
-  description = "resource group object resources will be added to"
+  description = "Resource group object resources will be added to"
   type = object({
-    name         = string
-    location     = string
+    name     = string
+    location = string
   })
 }
 
-variable "address" {  
-  description = "base address for subnets to be added"
-}
-
 variable "dns_servers" {
-  description = "ips for dns server"
+  description = "List of DNS server IP addresses"
+  type        = list(string)
   default     = []
 }
 
@@ -31,24 +29,31 @@ variable "subnets" {
 }
 
 variable "newbits" {
-  default = 4
+  description = "Default newbits for subnetting if not overridden per subnet"
+  type        = number
+  default     = 4
 }
 
 variable "service_endpoints" {  
-  default = ["Microsoft.Sql", "Microsoft.Storage", "Microsoft.KeyVault"]
+  description = "Service endpoints to associate with the subnets"
+  type        = list(string)
+  default     = ["Microsoft.Sql", "Microsoft.Storage", "Microsoft.KeyVault"]
 }
 
 variable "tags" {
-  type    = map(any)
-  default = {}
+  description = "Tags to apply to resources"
+  type        = map(any)
+  default     = {}
 }
 
+# --- IPAM integration ---
+variable "ipam_pool_name" {
+  description = "Name of the IPAM pool to allocate from."
+  type        = string
+}
 
-###new
-
-
-variable "ipam_pool_id" {
-  description = "The ID of the IPAM pool to allocate from."
+variable "network_manager_id" {
+  description = "The ID of the Network Manager that owns the IPAM pool."
   type        = string
 }
 
@@ -64,15 +69,6 @@ variable "number_of_ip_addresses" {
   default     = null
 }
 
-variable "ipam_pool_name" {
-  description = "Name of the IPAM pool to allocate from."
-  type        = string
-}
-
-variable "network_manager_id" {
-  description = "The ID of the Network Manager that owns the IPAM pool."
-  type        = string
-}
 
 
 
