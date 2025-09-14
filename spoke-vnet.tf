@@ -28,10 +28,6 @@ resource "azurerm_virtual_network" "spokevnet" {
 }
 
 
-
-
-
-
 data "azurerm_network_manager_ipam_pool" "selected" {
   name               = var.ipam_pool_name
   network_manager_id = var.network_manager_id
