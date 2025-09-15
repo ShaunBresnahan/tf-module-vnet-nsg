@@ -69,18 +69,16 @@ variable "auto_calculate_ip_count" {
   default     = true
 }
 
-#variable "number_of_ip_addresses" {
-#  description = "Manually set number of IP addresses to allocate (ignored if auto_calculate_ip_count = true)."
-#  type        = number
-#  default     = null
-#}
-
-
 variable "number_of_ip_addresses" {
   description = "Exact number of IP addresses to allocate to the VNet from the IPAM pool."
   type        = number
 }
 
+#variable "number_of_ip_addresses" {
+#  description = "Manually set number of IP addresses to allocate (ignored if auto_calculate_ip_count = true)."
+#  type        = number
+#  default     = null
+#}
 
 
 
