@@ -74,6 +74,12 @@ variable "number_of_ip_addresses" {
   type        = number
 }
 
+variable "attach_ipam" {
+  description = "Whether to attach the IPAM pool to the VNet."
+  type        = bool
+  default     = true
+}
+
 #variable "number_of_ip_addresses" {
 #  description = "Manually set number of IP addresses to allocate (ignored if auto_calculate_ip_count = true)."
 #  type        = number
