@@ -52,7 +52,7 @@ variable "ipam_pool_name" {
   type        = string
 }
 
-variable "desired_prefix_length" {
+variable "prefix_length" {
   description = "Desired IPv4 prefix length for the VNet allocation (e.g., 24 for /24)."
   type        = number
   default     = null
@@ -73,20 +73,6 @@ variable "number_of_ip_addresses" {
   description = "Exact number of IP addresses to allocate to the VNet from the IPAM pool."
   type        = number
 }
-
-#variable "attach_ipam" {
-#  description = "Whether to attach the IPAM pool to the VNet."
-#  type        = bool
-#  default     = true
-#}
-
-#variable "number_of_ip_addresses" {
-#  description = "Manually set number of IP addresses to allocate (ignored if auto_calculate_ip_count = true)."
-#  type        = number
-#  default     = null
-#}
-
-
 
 
 
