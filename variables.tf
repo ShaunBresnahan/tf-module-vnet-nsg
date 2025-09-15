@@ -52,6 +52,12 @@ variable "ipam_pool_name" {
   type        = string
 }
 
+variable "desired_prefix_length" {
+  description = "Desired IPv4 prefix length for the VNet allocation (e.g., 24 for /24)."
+  type        = number
+  default     = null
+}
+
 variable "network_manager_id" {
   description = "The ID of the Network Manager that owns the IPAM pool."
   type        = string
