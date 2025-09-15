@@ -51,19 +51,11 @@ resource "azurerm_virtual_network" "spokevnet" {
   dns_servers         = var.dns_servers
   tags                = var.tags
 
-dynamic "ip_address_pool" {
-  for_each = var.attach_ipam ? [1] : []
-  content {
-    id                     = data.azurerm_network_manager_ipam_pool.selected.id
-    number_of_ip_addresses = var.number_of_ip_addresses
-  }
+  ip_address_pool {
+  id                     = data.azurerm_network_manager_ipam_pool.selected.id
+  #number_of_ip_addresses = local.final_ip_count
+  number_of_ip_addresses = var.number_of_ip_addresses
 }
-
-#  ip_address_pool {
-#  id                     = data.azurerm_network_manager_ipam_pool.selected.id
-#  #number_of_ip_addresses = local.final_ip_count
-#  number_of_ip_addresses = var.number_of_ip_addresses
-#}
 
   lifecycle {
     ignore_changes = [tags]
