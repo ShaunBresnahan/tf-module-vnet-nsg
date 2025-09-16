@@ -17,17 +17,17 @@
 #}
 
 
-locals {
-  pool_cidr            = try(data.azurerm_network_manager_ipam_pool.selected.address_prefixes[0], null)
-  pool_calculated_ips  = local.pool_cidr != null ? pow(2, 32 - tonumber(split("/", local.pool_cidr)[1])) : null
-  desired_count        = var.prefix_length != null ? pow(2, 32 - var.prefix_length) : null
-
-  requested_ip_count = coalesce(
-    local.desired_count,                    # if you set desired_prefix_length (e.g., 24 -> 256)
-    (var.auto_calculate_ip_count ? local.pool_calculated_ips : null),  # else use pool size when auto=true
-    var.number_of_ip_addresses              # else manual fallback
-  )
-}
+#locals {
+#  pool_cidr            = try(data.azurerm_network_manager_ipam_pool.selected.address_prefixes[0], null)
+#  pool_calculated_ips  = local.pool_cidr != null ? pow(2, 32 - tonumber(split("/", local.pool_cidr)[1])) : null
+#  desired_count        = var.prefix_length != null ? pow(2, 32 - var.prefix_length) : null
+#
+#  requested_ip_count = coalesce(
+#    local.desired_count,                    # if you set desired_prefix_length (e.g., 24 -> 256)
+#    (var.auto_calculate_ip_count ? local.pool_calculated_ips : null),  # else use pool size when auto=true
+#    var.number_of_ip_addresses              # else manual fallback
+#  )
+#}
 
 
 
@@ -53,9 +53,10 @@ resource "azurerm_virtual_network" "spokevnet" {
 
   ip_address_pool {
   id                     = data.azurerm_network_manager_ipam_pool.selected.id
-  number_of_ip_addresses = local.requested_ip_count
+  number_of_ip_addresses = var.number_of_ip_addresses
+  #number_of_ip_addresses = local.requested_ip_count
   #number_of_ip_addresses = local.final_ip_count
-  #number_of_ip_addresses = var.number_of_ip_addresses
+  
 }
 
   lifecycle {

@@ -52,22 +52,22 @@ variable "ipam_pool_name" {
   type        = string
 }
 
-variable "prefix_length" {
-  description = "Desired IPv4 prefix length for the VNet allocation (e.g., 24 for /24)."
-  type        = number
-  default     = null
-}
+#variable "prefix_length" {
+#  description = "Desired IPv4 prefix length for the VNet allocation (e.g., 24 for /24)."
+#  type        = number
+#  default     = null
+#}
 
 variable "network_manager_id" {
   description = "The ID of the Network Manager that owns the IPAM pool."
   type        = string
 }
 
-variable "auto_calculate_ip_count" {
-  description = "If true, number_of_ip_addresses will be calculated from the IPAM pool CIDR."
-  type        = bool
-  default     = true
-}
+#variable "auto_calculate_ip_count" {
+#  description = "If true, number_of_ip_addresses will be calculated from the IPAM pool CIDR."
+#  type        = bool
+#  default     = true
+#}
 
 variable "number_of_ip_addresses" {
   description = "Exact number of IP addresses to allocate to the VNet from the IPAM pool."
