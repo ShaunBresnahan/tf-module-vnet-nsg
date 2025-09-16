@@ -42,7 +42,9 @@ data "azurerm_network_manager_ipam_pool" "selected" {
   network_manager_id = var.network_manager_id
 }
 
-
+  #number_of_ip_addresses = local.requested_ip_count
+  #number_of_ip_addresses = local.final_ip_count
+  
 resource "azurerm_virtual_network" "spokevnet" {
   name                = "${var.prefix}-vnet"
   provider            = azurerm.src
@@ -53,10 +55,7 @@ resource "azurerm_virtual_network" "spokevnet" {
 
   ip_address_pool {
   id                     = data.azurerm_network_manager_ipam_pool.selected.id
-  number_of_ip_addresses = var.number_of_ip_addresses
-  #number_of_ip_addresses = local.requested_ip_count
-  #number_of_ip_addresses = local.final_ip_count
-  
+  number_of_ip_addresses = var.number_of_ip_addresses 
 }
 
   lifecycle {
